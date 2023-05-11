@@ -3,7 +3,7 @@ import {
 } from 'react';
 import { ApiContext } from '../../App';
 import { Info } from './components/Info';
-import { PathInfo } from './components/PathInfo';
+import { PathInfo } from '../../components/PathInfo';
 
 export default function Home() {
 		const apiData = useContext(ApiContext);

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PathMapped } from '../../../types/paths';
+import { PathMapped } from '../types/paths';
 
 type Props = {
 		readonly path: PathMapped;
