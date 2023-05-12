@@ -21,7 +21,7 @@ function App() {
 		const [isLoading, setIsLoading] = useState(true);
 		const getData = useGetData();
 
-		const fetchApiShape = async () => {
+		const fetchApiData = async () => {
 				setIsLoading(true);
 				const apiShape: ResponseShape = await getData();
 
@@ -33,7 +33,7 @@ function App() {
 		}
 
 		useEffect(() => {
-			fetchApiShape();
+			fetchApiData();
 		}, []);
 
 
