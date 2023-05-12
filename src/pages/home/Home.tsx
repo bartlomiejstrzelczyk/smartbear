@@ -9,7 +9,7 @@ export default function Home() {
 		const apiData = useContext(ApiContext);
 
 		return (
-				<div>
+				<div className="divide-y divide-gray-300/50">
 						{apiData.info && (
 								<Info info={apiData.info} />
 						)}

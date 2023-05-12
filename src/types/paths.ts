@@ -48,8 +48,6 @@ export type PathMapped = {
 		readonly methods: MappedMethod[]
 }
 
-export type PathsArray = PathMapped[];
-
 export type MappedResponse = {
 		readonly code: string;
 		readonly description: Response['description'];

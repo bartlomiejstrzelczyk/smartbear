@@ -6,7 +6,7 @@ type Props = {
 
 export function Info({ info }: Props) {
 		return (
-				<div>
+				<div className="pb-2">
 						<p>
 								{info.title} {info.version}
 						</p>
@@ -19,7 +19,7 @@ export function Info({ info }: Props) {
 								License: {info.license.name}
 						</p>
 
-						<p className="pt-2">
+						<p className="py-2">
 								{info.description}
 						</p>
 				</div>

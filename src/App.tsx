@@ -3,9 +3,7 @@ import React, {
 		useEffect,
 		useState
 } from 'react';
-import {
-		RouterProvider,
-} from 'react-router-dom';
+import { RouterProvider, } from 'react-router-dom';
 
 import './App.css';
 import { useGetData } from './hooks/useGetData';
@@ -14,72 +12,46 @@ import {
 		ResponseShape,
 } from './types/types';
 import { router } from './router';
-import {
-		MappedMethod,
-		MappedResponse,
-		Methods,
-		PathMapped,
-		PathsObj,
-		Responses
-} from './types/paths';
+import { mapPaths } from './helpers';
 
 export const ApiContext = createContext({} as MappedResponseShape);
 
-function mapResponses(responses: Responses): MappedResponse[] {
-		return Object.entries(responses).map(([key, value]) => {
-				return {
-						code: key,
-						description: value.description,
-				}
-		});
-}
-
-function mapMethods(methods: Methods): MappedMethod[] {
-		return Object.entries(methods).map(([key, value]) => {
-				return {
-						...value,
-						responses: mapResponses(value.responses),
-						method: key,
-				};
-		});
-}
-
-const mapPaths = (pathsObj: PathsObj): PathMapped[] => {
-		let id = 0;
-		return Object.entries(pathsObj).map(([key, value]) => {
-				id++;
-				return {
-						pathName: key,
-						methods: mapMethods(value),
-						id,
-				}
-		});
-}
-
 function App() {
 		const [apiData, setApiData] = useState<MappedResponseShape>({} as MappedResponseShape);
+		const [isLoading, setIsLoading] = useState(true);
 		const getData = useGetData();
 
 		const fetchApiShape = async () => {
+				setIsLoading(true);
 				const apiShape: ResponseShape = await getData();
 
 				setApiData({
 						...apiShape,
 						paths: mapPaths(apiShape.paths)
 				});
+				setIsLoading(false);
 		}
 
 		useEffect(() => {
 			fetchApiShape();
 		}, []);
 
-  return (
-    <div className="px-8 py-4">
-		    <ApiContext.Provider value={apiData}>
-				    <RouterProvider router={router} />
-		    </ApiContext.Provider>
-    </div>
-  );
+
+		if (isLoading) {
+				return (
+						<div className="grid place-content-center">
+								Loading data...
+						</div>
+				)
+		}
+
+		return (
+				<div className="px-8 py-4">
+				    <ApiContext.Provider value={apiData}>
+						    <RouterProvider router={router} />
+				    </ApiContext.Provider>
+				</div>
+		);
 }
 
 export default App;
